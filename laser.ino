@@ -9,9 +9,9 @@ const double PHI_OFFSET = 500;
 const double PHI_CORRECT = 75;
 
 const double X_MIN = 0;
-const double X_MAX = 100;
-const double Y_MIN = 0;
-const double Y_MAX = 50;
+const double X_MAX = 130;
+const double Y_MIN = 18;
+const double Y_MAX = 80;
 const double Z_OFFSET = 62;
 
 const double RESOLUTION = .1;
@@ -229,7 +229,54 @@ void tease()
   }
 }
 
+void center()
+{
+  servo_phi.write(90);
+  servo_theta.write(90);
+}
+
+void left()
+{
+  servo_phi.write(0);
+  servo_theta.write(0);
+}
+
+void right()
+{
+  servo_phi.write(180);
+  servo_theta.write(180);
+}
+
+void position() {
+  left();
+  delay(5000);
+  center();
+  delay(5000);
+  right();
+  delay(5000);
+}
+
+void bounds() {
+  Point p1 = {x : X_MIN, y : Y_MIN};
+  Point p2 = {x : X_MIN, y : Y_MAX};
+  Point p3 = {x : X_MAX, y : Y_MAX};
+  Point p4 = {x : X_MAX, y : Y_MIN};
+
+  delay(3000);
+  traverse(p1, p2, SPEED_BASE);
+  delay(3000);
+  traverse(p2, p3, SPEED_BASE);
+  delay(3000);
+  traverse(p3, p4, SPEED_BASE);
+  delay(3000);
+  traverse(p4, p1, SPEED_BASE);
+  delay(3000);
+}
+
 void loop()
 {
+  // position();
+  // center();
+  // bounds();
   tease();
 }
